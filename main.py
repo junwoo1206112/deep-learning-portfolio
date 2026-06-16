@@ -1,3 +1,4 @@
+import argparse
 import os
 import random
 import yaml
@@ -49,6 +50,10 @@ def save_model(model_obj, model_dir: str, model_name: str):
 
 
 def main():
+    parser = argparse.ArgumentParser(description="Manufacturing DL Portfolio")
+    parser.add_argument('--quick', action='store_true', help='빠른 실행 (epochs=5)')
+    args = parser.parse_args()
+
     print("=" * 60)
     print("제조 공정 딥러닝 포트폴리오")
     print("=" * 60)
@@ -56,6 +61,12 @@ def main():
     config = load_config()
     seed = config['data']['random_seed']
     set_seeds(seed)
+
+    if args.quick:
+        print("[빠른 모드] epochs를 5로 설정합니다.")
+        for model_key in config['models']:
+            if isinstance(config['models'][model_key], dict) and 'epochs' in config['models'][model_key]:
+                config['models'][model_key]['epochs'] = 5
 
     tracker.setup_tracking(config)
     run = tracker.start_run(run_name="full_pipeline")
