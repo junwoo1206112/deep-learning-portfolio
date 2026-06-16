@@ -48,13 +48,16 @@
 
 ## Expected Results
 
-| Model | Primary Metric | Expected Range |
-|-------|---------------|----------------|
-| LSTM | R² | ~0.90 |
-| GRU | R² | ~0.90 |
-| Transformer | R² | ~0.88 |
-| CNN | Accuracy | ~0.85 |
-| Autoencoder | 95th percentile threshold | Data dependent |
-| VAE | 95th percentile threshold | Data dependent |
+| Model | Primary Metric | Expected Range | Inference Latency |
+|-------|---------------|----------------|-------------------|
+| LSTM | R² | ~0.90 | TBD |
+| GRU | R² | ~0.90 | TBD |
+| Transformer | R² | ~0.88 | TBD |
+| CNN | Accuracy | ~0.85 | TBD |
+| Autoencoder | 95th percentile threshold | Data dependent | TBD |
+| VAE | 95th percentile threshold | Data dependent | TBD |
+
+> Inference latency는 `src/benchmark.py`로 측정 가능합니다.
+> `python -c "from src.benchmark import benchmark_predict; ..."`
 
 > Note: 합성 데이터 기반이므로 실제 수치는 랜덤 시드와 데이터 생성 파라미터에 따라 달라질 수 있습니다.

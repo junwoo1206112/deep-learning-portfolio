@@ -32,7 +32,7 @@
 pip install -r requirements.txt
 ```
 
-### 2. Run full pipeline
+### 2. Run full pipeline (synthetic data)
 
 ```bash
 python main.py
@@ -40,13 +40,33 @@ python main.py
 
 이미 학습된 모델이 있으면 생략 가능 (`models/saved/` 확인).
 
-### 3. Launch dashboard
+빠른 테스트는 `--quick` 플래그 사용 (epochs=5):
+
+```bash
+python main.py --quick
+```
+
+### 3. Run with real CSV data
+
+`config/config.yaml`에서 data source를 csv로 변경:
+
+```yaml
+data:
+  source:
+    type: csv
+    path: data/raw/example.csv   # 샘플 데이터
+    label_column: anomaly
+```
+
+`data/raw/example.csv`에 1000개 샘플이 포함되어 있습니다.
+
+### 4. Launch dashboard
 
 ```bash
 streamlit run dashboard/app.py
 ```
 
-### 4. Launch API server (optional)
+### 5. Launch API server (optional)
 
 ```bash
 uvicorn api.main:app --host 0.0.0.0 --port 8000

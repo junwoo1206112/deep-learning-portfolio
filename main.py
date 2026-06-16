@@ -52,6 +52,7 @@ def save_model(model_obj, model_dir: str, model_name: str):
 def main():
     parser = argparse.ArgumentParser(description="Manufacturing DL Portfolio")
     parser.add_argument('--quick', action='store_true', help='빠른 실행 (epochs=5)')
+    parser.add_argument('--export-tflite', action='store_true', help='모든 모델을 TFLite로 변환')
     args = parser.parse_args()
 
     print("=" * 60)
@@ -67,6 +68,18 @@ def main():
         for model_key in config['models']:
             if isinstance(config['models'][model_key], dict) and 'epochs' in config['models'][model_key]:
                 config['models'][model_key]['epochs'] = 5
+
+    if args.export_tflite:
+        from src.tflite_exporter import convert_to_tflite
+        print("\nTFLite 변환 중...")
+        for name in ['lstm', 'gru', 'transformer', 'cnn', 'autoencoder', 'vae']:
+            model_path = Path(model_dir) / f"{name}.keras"
+            if model_path.exists():
+                model = tf.keras.models.load_model(str(model_path))
+                output = str(Path(model_dir) / f"{name}.tflite")
+                convert_to_tflite(model, output)
+                print(f"  {name}: {output}")
+        return
 
     tracker.setup_tracking(config)
     run = tracker.start_run(run_name="full_pipeline")
