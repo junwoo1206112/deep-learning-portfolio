@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.mypy_cache/
+env/
+venv/
+.venv/
+models/saved/
+visualizations/
+data/
+mlruns/
+openspec/
+.coverage
+.ipynb_checkpoints/
+.DS_Store

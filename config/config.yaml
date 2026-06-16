@@ -1,0 +1,91 @@
+# Deep Learning Portfolio 설정
+
+data:
+  n_samples: 10000
+  n_features: 5
+  sequence_length: 10
+  train_ratio: 0.7
+  val_ratio: 0.15
+  anomaly_ratio: 0.05
+  image_size: 64
+  random_seed: 42
+  source:
+    type: synthetic
+    # type: csv
+    # path: data/raw/sensor_data.csv
+    # label_column: anomaly
+    # type: sqlite
+    # path: data/raw/sensor_data.db
+    # table: sensor
+    # label_column: anomaly
+
+models:
+  lstm:
+    units: 64
+    epochs: 50
+    batch_size: 32
+    learning_rate: 0.001
+  
+  gru:
+    units: 64
+    epochs: 50
+    batch_size: 32
+    learning_rate: 0.001
+  
+  transformer:
+    d_model: 64
+    num_heads: 4
+    dff: 128
+    num_layers: 2
+    epochs: 50
+    batch_size: 32
+    learning_rate: 0.001
+  
+  cnn:
+    filters: [32, 64, 128]
+    kernel_size: 3
+    epochs: 30
+    batch_size: 32
+    learning_rate: 0.001
+    image_size: 64
+  
+  autoencoder:
+    encoding_dim: 32
+    epochs: 50
+    batch_size: 32
+    learning_rate: 0.001
+  
+  vae:
+    encoding_dim: 32
+    latent_dim: 8
+    epochs: 50
+    batch_size: 32
+    learning_rate: 0.001
+
+training:
+  early_stopping:
+    patience: 10
+    restore_best_weights: true
+  model_dir: "models/saved"
+
+tuning:
+  n_trials: 20
+  n_splits: 5
+  model: lstm
+  param_space:
+    units: [16, 32, 64]
+    learning_rate: [0.0001, 0.001, 0.01]
+    batch_size: [16, 32]
+
+api:
+  host: "0.0.0.0"
+  port: 8000
+  reload: false
+
+mlflow:
+  tracking_uri: "sqlite:///mlruns/mlflow.db"
+  experiment_name: "manufacturing_dl_portfolio"
+
+dashboard:
+  port: 8501
+  title: "제조 공정 딥러닝 대시보드"
