@@ -72,6 +72,50 @@ streamlit run dashboard/app.py
 uvicorn api.main:app --host 0.0.0.0 --port 8000
 ```
 
+## Website / Web Demo
+
+이 프로젝트는 별도의 정적 HTML 웹사이트가 아니라, 학습 결과와 모델 예측을 확인할 수 있는 Python 기반 웹 애플리케이션을 제공합니다.
+
+모델 예측 기능을 사용하려면 먼저 모델을 학습하세요.
+
+```bash
+python main.py --quick
+```
+
+### Streamlit Dashboard
+
+학습 과정과 모델 비교, 이상 탐지 결과 그래프를 확인할 수 있습니다.
+
+```bash
+streamlit run dashboard/app.py
+```
+
+실행 후 브라우저에서 <http://localhost:8501>에 접속하세요.
+
+### Gradio Interactive Demo
+
+시계열 예측, 제품 이미지 분류, 센서 이상 탐지를 브라우저에서 직접 시험할 수 있습니다.
+
+```bash
+python dashboard/gradio_app.py
+```
+
+실행 후 터미널에 표시되는 로컬 주소(일반적으로 <http://127.0.0.1:7860>)에 접속하세요.
+
+### FastAPI Prediction API
+
+다른 웹 또는 앱에서 모델 예측 기능을 호출할 수 있는 REST API를 제공합니다.
+
+```bash
+uvicorn api.main:app --host 0.0.0.0 --port 8000
+```
+
+- API 상태 확인: <http://localhost:8000/health>
+- Swagger API 문서: <http://localhost:8000/docs>
+- ReDoc API 문서: <http://localhost:8000/redoc>
+
+> 저장된 모델이 없으면 서버의 상태 확인 기능만 사용할 수 있으며 예측 요청은 실패합니다. `python main.py --quick`을 먼저 실행해 `models/saved/`에 모델을 생성하세요.
+
 ## Architecture
 
 ```
